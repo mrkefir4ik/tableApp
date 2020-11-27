@@ -65,3 +65,44 @@ TextCell.prototype.draw = function (width, height){
   }
   return result;
 };
+
+
+function UnderlinedCell (inner){
+  this.inner = inner;
+};
+UnderlinedCell.prototype.minWidth = function(){
+  return this.inner.minWidth();
+};
+UnderlinedCell.prototype.minHeight = function(){
+  return this.inner.minHeight()+1;
+};
+UnderlinedCell.prototype.draw = function(width,height){
+  return this.inner.draw(width,height - 1).concat([repeat('-',width)]);
+};
+
+function dataTable(data) {
+  let keys = Object.keys(data[0]);
+  let headers = keys.map(function(name){
+    return new UnderlinedCell(new TextCell(name));
+  });
+  let body = data.map(function(row){
+    return keys.map(function(name){
+      return new TextCell(String(row[name]));
+    });
+  });
+  return [headers].concat(body);
+}
+
+
+//Working example
+const MOUNTAINS = [
+  {name: "Kilimanjaro", height: 5895, country: "Tanzania"},
+  {name: "Everest", height: 8848, country: "Nepal"},
+  {name: "Mount Fuji", height: 3776, country: "Japan"},
+  {name: "Mont Blanc", height: 4808, country: "Italy/France"},
+  {name: "Vaalserberg", height: 323, country: "Netherlands"},
+  {name: "Denali", height: 6168, country: "United States"},
+  {name: "Popocatepetl", height: 5465, country: "Mexico"}
+];
+
+console.log(drawTable(dataTable(MOUNTAINS)));
