@@ -29,8 +29,39 @@ function drawTable (rows) {
     });
     return blocks[0].map(function(_,lineNo) {
       return drawLine(blocks, lineNo);
-    }).join('/n');
+    }).join('\n');
   }
 
-  return rows.map(drawRow).join('/n');
+  return rows.map(drawRow).join('\n');
 }
+
+function repeat (string, times) {
+  let result = '';
+  for (let i = 0; i < times; i++){
+    result += string;
+  }
+  return result;
+}
+
+function TextCell(text) {
+  this.text = text.split('\n');
+}
+
+TextCell.prototype.minWidth = function(){
+  return this.text.reduce(function(width,line){
+    return Math.max(width, line.length);
+  },0);
+};
+
+TextCell.prototype.minHeight = function(){
+  return this.text.length;
+};
+
+TextCell.prototype.draw = function (width, height){
+  let result = [];
+  for (;et i = 0; i<height; i++){
+    let line = this.text[i] || '';
+    result.push(;ine + repeat(' ', width - line.length));
+  }
+  return result;
+};
