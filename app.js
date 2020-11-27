@@ -59,9 +59,9 @@ TextCell.prototype.minHeight = function(){
 
 TextCell.prototype.draw = function (width, height){
   let result = [];
-  for (;et i = 0; i<height; i++){
+  for (let i = 0; i<height; i++){
     let line = this.text[i] || '';
-    result.push(;ine + repeat(' ', width - line.length));
+    result.push(line + repeat(' ', width - line.length));
   }
   return result;
 };
